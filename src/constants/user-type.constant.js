@@ -1,5 +1,7 @@
 module.exports = {
-  1: 'NguoiQuanLy',
-  2: 'HuongDuongVien',
-  3: 'KhachHang',
+  1: 'KhachHang',
+  2: 'HuongDanVien',
+  3: 'NguoiQuanLy',
+  4: 'QuanTriVien',
 };
+

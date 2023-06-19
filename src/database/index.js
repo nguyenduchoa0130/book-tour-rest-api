@@ -20,7 +20,7 @@ class Database {
   }
 
   getModel(name) {
-    const model = this._sequelize.model(name);
+    const model = this._sequelize.models[name];
     if (model) {
       return model;
     }

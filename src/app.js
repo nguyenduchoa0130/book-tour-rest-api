@@ -18,6 +18,7 @@ app.use(morgan('common'));
 // mount routes
 app.use('/api/auth', auth);
 app.use('/api/tour', tour);
+app.use('/api/admin', tour);
 app.use(error);
 
 module.exports = app;
