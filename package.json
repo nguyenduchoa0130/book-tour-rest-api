@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --inspect index.js",
-    "init-tb": "sequelize-cli db:migrate",
-    "rm-tb": "sequelize-cli db:migrate:undo:all",
+    "create-table": "sequelize-cli db:migrate",
+    "rm-table": "sequelize-cli db:migrate:undo:all",
     "start": "node index.js"
   },
   "keywords": [],
@@ -31,3 +31,4 @@
     "sequelize-cli": "^6.6.1"
   }
 }
+
