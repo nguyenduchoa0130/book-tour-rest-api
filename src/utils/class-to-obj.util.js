@@ -1,3 +1,9 @@
+/**
+ * Convert instance to object
+ * @param {any} classInstance
+ * @param {string[]} selectFields
+ * @returns
+ */
 const classToObj = (classInstance, selectFields) => {
   const json = classInstance.toJSON();
   return selectFields.reduce((result, field) => {
@@ -7,3 +13,4 @@ const classToObj = (classInstance, selectFields) => {
 };
 
 module.exports = classToObj;
+
