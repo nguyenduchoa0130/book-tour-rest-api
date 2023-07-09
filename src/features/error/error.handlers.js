@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const logger = require('./../../utils/logger.util');
+const logger = require('../../utils/logger.util');
 
 /**
  * Handling error
@@ -22,7 +22,7 @@ const handleError = (err, req, res, next) => {
   return res.status(statusCode).json({
     error: err.type || 'INTERNAL_ERROR_SERVER',
     message,
-    ...tracing,
+    ...tracings,
   });
 };
 

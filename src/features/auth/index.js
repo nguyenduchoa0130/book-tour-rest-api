@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const handler = require('./auth.handler');
+const handler = require('./auth.handlers');
 const {
   validateSignInPayload,
   validateSignUpPayload,

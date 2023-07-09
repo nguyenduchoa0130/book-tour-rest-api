@@ -1,10 +1,10 @@
 const express = require('express');
-const db = require('./../../database');
-const USER_TYPE = require('./../../constants/user-type.constant');
-const AppError = require('./../../models/error.model');
-const passwordUtil = require('./../../utils/password.util');
+const db = require('../../database');
+const USER_TYPE = require('../../constants/user-type.constant');
+const AppError = require('../../models/error.model');
+const passwordUtil = require('../../utils/password.util');
 const catchAsync = require('../../utils/catch-async.util');
-const ErrorMessages = require('./../../constants/error-message.constant');
+const ErrorMessages = require('../../constants/error-message.constant');
 const classToObj = require('../../utils/class-to-obj.util');
 
 module.exports = {

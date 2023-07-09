@@ -4,7 +4,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 // Features
 const auth = require('./features/auth');
-const tour = require('./features/tour');
+const tours = require('./features/tours');
+const hotels = require('./features/hotels');
+const admin = require('./features/admin');
 const error = require('./features/error');
 
 const app = express();
@@ -17,8 +19,9 @@ app.use(morgan('common'));
 
 // mount routes
 app.use('/api/auth', auth);
-app.use('/api/tour', tour);
-app.use('/api/admin', tour);
+app.use('/api/tours', tours);
+app.use('/api/hotels', hotels);
+app.use('/api/admin', admin);
 app.use(error);
 
 module.exports = app;
