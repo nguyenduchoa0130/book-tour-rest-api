@@ -2,27 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('QuanTriViens', {
+    await queryInterface.createTable('TourImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
-      HoVaTen: {
-        type: Sequelize.STRING,
+      url: {
+        type: Sequelize.STRING
       },
-      DiaChi: {
-        type: Sequelize.STRING,
+      source: {
+        type: Sequelize.BLOB
       },
-      Sdt: {
-        type: Sequelize.STRING,
-      },
-      TenTaiKhoan: {
-        type: Sequelize.STRING,
-      },
-      MatKhau: {
-        type: Sequelize.STRING,
+      tourId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -31,10 +25,10 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),
-      },
+      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('QuanTriViens');
-  },
+    await queryInterface.dropTable('TourImages');
+  }
 };

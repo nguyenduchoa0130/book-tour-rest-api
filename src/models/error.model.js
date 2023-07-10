@@ -11,7 +11,18 @@ class AppError {
     error.statusCode = 404;
     return error;
   }
+  static createUnauthorizeError(message) {
+    const error = new Error(message);
+    error.type = 'UNAUTHORIZE';
+    error.statusCode = 401;
+    return error;
+  }
+  static createForbiddenError(message) {
+    const error = new Error(message);
+    error.type = 'FORBIDDEN';
+    error.statusCode = 403;
+    return error;
+  }
 }
 
 module.exports = AppError;
-

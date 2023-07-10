@@ -2,12 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-// Features
-const auth = require('./features/auth');
-const tours = require('./features/tours');
-const hotels = require('./features/hotels');
-const admin = require('./features/admin');
-const error = require('./features/error');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -16,13 +11,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan('common'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // mount routes
-app.use('/api/auth', auth);
-app.use('/api/tours', tours);
-app.use('/api/hotels', hotels);
-app.use('/api/admin', admin);
-app.use(error);
+app.use('/api/auth', require('./features/auth'));
+app.use('/api/tours', require('./features/tours'));
+app.use('/api/hotels', require('./features/hotels'));
+app.use('/api/admin', require('./features/admin'));
+app.use('/api/roles', require('./features/roles'));
+app.use('*', require('./features/not-found'));
+app.use(require('./features/error'));
 
 module.exports = app;
-

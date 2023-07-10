@@ -1,5 +1,5 @@
 const UserRoleEnum = require('../../enums/user-role.enum');
-const ErrorMessages = require('./../../constants/error-message.constant');
+const ErrorMessages = require('../../constants/error-message.constants');
 const { validate } = require('../../middleware/validator.mid');
 
 const SIGN_IN_VALIDATOR_SCHEMA = {

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const app = require('./src/app');
-const logger = require('./src/utils/logger.util');
+const { logger } = require('./src/utils');
 const db = require('./src/database');
 
 const PORT = process.env.PORT || 3001;
@@ -11,7 +11,7 @@ db.connect()
     logger.info('Connect database successfully');
     app.listen(PORT, () => {
       logger.info(
-        `Initialize server successfully. Server is running at port ${PORT}`
+        `Initialize server successfully. Server is running at port ${ PORT }`
       );
     });
   })

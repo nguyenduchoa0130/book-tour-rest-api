@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --inspect index.js",
     "create-table": "sequelize-cli db:migrate",
+    "import-data": "sequelize-cli db:seed:all",
+    "rm-data": "npx sequelize-cli db:seed:undo:all",
     "rm-table": "sequelize-cli db:migrate:undo:all",
     "start": "node index.js"
   },
@@ -15,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
@@ -31,4 +34,3 @@
     "sequelize-cli": "^6.6.1"
   }
 }
-

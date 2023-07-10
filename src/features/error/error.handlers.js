@@ -16,15 +16,12 @@ const handleError = (err, req, res, next) => {
     logger.error(err);
   }
   const tracing =
-    process.env.NODE_ENV !== 'production' && statusCode === 500
-      ? { tracing: err.stack }
-      : null;
+    process.env.NODE_ENV !== 'production' && statusCode === 500 ? { tracing: err.stack } : null;
   return res.status(statusCode).json({
     error: err.type || 'INTERNAL_ERROR_SERVER',
     message,
-    ...tracings,
+    ...tracing,
   });
 };
 
 module.exports = handleError;
-
