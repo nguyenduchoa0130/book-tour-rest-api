@@ -17,7 +17,6 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use('/api/auth', require('./features/auth'));
 app.use('/api/tours', require('./features/tours'));
 app.use('/api/hotels', require('./features/hotels'));
-app.use('/api/admin', require('./features/admin'));
 app.use('/api/roles', require('./features/roles'));
 app.use('*', require('./features/not-found'));
 app.use(require('./features/error'));

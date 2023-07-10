@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const handler = require('./tours.handlers');
-router.post('/_create', handler.handleCreateTour);
-router
-  .route('/_update')
-  .put(handler.handleFullUpdateTour)
-  .patch(handler.handlePartialUpdateTour);
-router.delete('/_delete', handler.handleDeleteTour);
-module.exports = router;
 
+router.get('/_getAll', handler.getAllTours);
+router.get('/_getOne', handler.getTour);
+router.post('/_create', handler.createTour);
+router.patch('/_update/:tourId', handler.updateTour);
+router.delete('/_delete:tourId', handler.deleteTour);
+
+module.exports = router;

@@ -1,6 +1,6 @@
 const UserRoleEnum = require('../../enums/user-role.enum');
 const ErrorMessages = require('../../constants/error-message.constants');
-const { validate } = require('../../middleware/validator.mid');
+const { validateMid } = require('../../middleware');
 
 const SIGN_IN_VALIDATOR_SCHEMA = {
   username: {
@@ -53,13 +53,7 @@ const SIGN_UP_VALIDATOR_SCHEMA = {
       errorMessage: ErrorMessages.ERROR_EMPTY_TYPE_OF_USER,
     },
     isIn: {
-      options: [
-        [
-          UserRoleEnum.KhachHang,
-          UserRoleEnum.HuongDanVien,
-          UserRoleEnum.NguoiQuanLy,
-        ],
-      ],
+      options: [[UserRoleEnum.KhachHang, UserRoleEnum.HuongDanVien, UserRoleEnum.NguoiQuanLy]],
       errorMessage: ErrorMessages.ERROR_INVALID_TYPE_OF_USER,
     },
   },
@@ -87,10 +81,9 @@ const SIGN_UP_VALIDATOR_SCHEMA = {
 
 module.exports = {
   validateSignInPayload: () => {
-    return validate(SIGN_IN_VALIDATOR_SCHEMA);
+    return validateMid(SIGN_IN_VALIDATOR_SCHEMA);
   },
   validateSignUpPayload: () => {
-    return validate(SIGN_UP_VALIDATOR_SCHEMA);
+    return validateMid(SIGN_UP_VALIDATOR_SCHEMA);
   },
 };
-

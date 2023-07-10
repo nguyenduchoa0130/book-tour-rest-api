@@ -4,7 +4,7 @@ const { ModelEnum } = require('../../enums');
 const Roles = db.getModel(ModelEnum.Roles);
 
 module.exports = {
-  getRoles: catchAsync(async (req, res, next) => {
+  getAllRoles: catchAsync(async (req, res, next) => {
     const roles = await Roles.findAll({
       attributes: {
         exclude: ['createdAt', 'updatedAt'],

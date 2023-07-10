@@ -6,27 +6,33 @@ module.exports = {
    * @param {express.Response} res
    * @param {express.NextFunction} next
    */
-  handleCreateTour: async (req, res, next) => {},
+  getAllTours: async (req, res, next) => {},
 
   /**
    * @param {express.Request} req
    * @param {express.Response} res
    * @param {express.NextFunction} next
    */
-  handleFullUpdateTour: async (req, res, next) => {},
+  getTour: async (req, res, next) => {},
 
   /**
    * @param {express.Request} req
    * @param {express.Response} res
    * @param {express.NextFunction} next
    */
-  handlePartialUpdateTour: async (req, res, next) => {},
+  createTour: async (req, res, next) => {},
 
   /**
    * @param {express.Request} req
    * @param {express.Response} res
    * @param {express.NextFunction} next
    */
-  handleDeleteTour: async (req, res, next) => {},
+  updateTour: async (req, res, next) => {},
+
+  /**
+   * @param {express.Request} req
+   * @param {express.Response} res
+   * @param {express.NextFunction} next
+   */
+  deleteTour: async (req, res, next) => {},
 };
-
