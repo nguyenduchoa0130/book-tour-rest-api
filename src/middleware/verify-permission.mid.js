@@ -7,7 +7,7 @@ const { AppErrorModel } = require('../models');
  */
 const verifyPermissionMid = (roles = []) => {
   return (req, res, next) => {
-    const { user } = req.signedCookies;
+    const { user } = req.cookies;
     if (!user) {
       return next(AppErrorModel.createUnauthorizeError('Bạn chưa đăng nhập !!'));
     }

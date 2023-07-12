@@ -9,9 +9,20 @@ const app = express();
 // use middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use((req, res, next) => {
+  res.set('Access-Control-Allow-Origin', req.headers.origin);
+  res.set('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  return next();
+});
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.ALLOW_ORIGINS.split(','),
+    credentials: true,
+  }),
+);
 app.use(morgan('common'));
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // mount routes
 app.use('/api/auth', require('./features/auth'));
