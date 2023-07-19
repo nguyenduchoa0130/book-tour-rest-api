@@ -26,7 +26,10 @@ class Database {
     }
     throw new Error(`Not found model: ${name}`);
   }
+
+  runQuery(query) {
+    return this._sequelize.query(query);
+  }
 }
 
 module.exports = new Database(sequelize);
-

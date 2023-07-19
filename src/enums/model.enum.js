@@ -3,7 +3,7 @@ module.exports = {
   KhachHang: 'KhachHang',
   NguoiQuanLy: 'NguoiQuanLy',
   Tours: 'Tours',
-  TourDetails: 'TourDetails',
-  TourImages: 'TourImages',
-  Roles: 'Roles'
+  ChiTietTours: 'ChiTietTours',
+  HinhAnhTours: 'HinhAnhTours',
+  Roles: 'Roles',
 };

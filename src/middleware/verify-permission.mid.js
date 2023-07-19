@@ -1,3 +1,4 @@
+const { UserRoleEnum } = require('../enums');
 const { AppErrorModel } = require('../models');
 
 /**
@@ -7,13 +8,13 @@ const { AppErrorModel } = require('../models');
  */
 const verifyPermissionMid = (roles = []) => {
   return (req, res, next) => {
-    const { user } = req.cookies;
-    if (!user) {
+    if (!req.cookies.user) {
       return next(AppErrorModel.createUnauthorizeError('Bạn chưa đăng nhập !!'));
     }
-    if (roles.length && !roles.includes(user.role)) {
-      return next(
-        AppErrorModel.createForbiddenError('Bạn không có quyền thực hiện thao tác này !!'),
+    const user = JSON.parse(req.cookies.user);
+    if (roles.length) {
+      const err = AppErrorModel.createForbiddenError(
+        'Bạn không có quyền thực hiện thao tác này !!',
       );
     }
     req.user = user;

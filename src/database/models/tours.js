@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const { ModelEnum } = require('../../enums');
 module.exports = (sequelize, DataTypes) => {
   class Tours extends Model {
     /**
@@ -11,20 +10,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models[ModelEnum.HuongDanVien]);
+      this.hasMany(models[ModelEnum.ChiTietTours]);
+      this.hasMany(models[ModelEnum.HinhAnhTours]);
     }
   }
-  Tours.init({
-    title: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
-    numberOfUsers: DataTypes.INTEGER,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    dateDetail: DataTypes.STRING,
-    openBookDate: DataTypes.DATE,
-    closeBookDate: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'Tours',
-  });
+  Tours.init(
+    {
+      TenTour: DataTypes.STRING,
+      Gia: DataTypes.DOUBLE,
+      DiaDiem: DataTypes.STRING,
+      SoLuongNguoi: DataTypes.INTEGER,
+      NgayBatDau: DataTypes.DATE,
+      NgayKetThuc: DataTypes.DATE,
+      ChiTietThoiGian: DataTypes.STRING,
+      HuongDanVienId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Tours',
+    },
+  );
   return Tours;
 };

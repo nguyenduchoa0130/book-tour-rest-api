@@ -39,16 +39,6 @@ const signUpPayloadSchema = {
       errorMessage: UserRoleEnum.ERROR_EMPTY_PASSWORD,
     },
   },
-  typeOfUser: {
-    in: 'body',
-    notEmpty: {
-      errorMessage: UserRoleEnum.ERROR_EMPTY_TYPE_OF_USER,
-    },
-    isIn: {
-      options: [[UserRoleEnum.KhachHang, UserRoleEnum.HuongDanVien, UserRoleEnum.NguoiQuanLy]],
-      errorMessage: UserRoleEnum.ERROR_INVALID_TYPE_OF_USER,
-    },
-  },
   fullName: {
     in: 'body',
     notEmpty: {

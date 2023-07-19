@@ -7,31 +7,37 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      title: {
-        type: Sequelize.STRING
+      TenTour: {
+        type: Sequelize.STRING,
       },
-      price: {
-        type: Sequelize.DOUBLE
+      Gia: {
+        type: Sequelize.DOUBLE,
       },
-      numberOfUsers: {
-        type: Sequelize.INTEGER
+      DiaDiem: {
+        type: Sequelize.STRING,
       },
-      startDate: {
-        type: Sequelize.DATE
+      SoLuongNguoi: {
+        type: Sequelize.INTEGER,
       },
-      endDate: {
-        type: Sequelize.DATE
+      NgayBatDau: {
+        type: Sequelize.DATE,
       },
-      dateDetail: {
-        type: Sequelize.STRING
+      NgayKetThuc: {
+        type: Sequelize.DATE,
       },
-      openBookDate: {
-        type: Sequelize.DATE
+      ChiTietThoiGian: {
+        type: Sequelize.STRING,
       },
-      closeBookDate: {
-        type: Sequelize.DATE
+      HuongDanVienId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'HuongDanViens',
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -40,10 +46,10 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Tours');
-  }
+  },
 };

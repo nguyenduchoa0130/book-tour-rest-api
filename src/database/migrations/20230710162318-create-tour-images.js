@@ -2,21 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TourImages', {
+    await queryInterface.createTable('HinhAnhTours', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       source: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB,
       },
-      tourId: {
-        type: Sequelize.INTEGER
+      TourId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Tours',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+      imgType: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -25,10 +34,10 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TourImages');
-  }
+    await queryInterface.dropTable('HinhAnhTours');
+  },
 };

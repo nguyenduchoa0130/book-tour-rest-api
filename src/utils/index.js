@@ -4,4 +4,5 @@ module.exports = {
   catchAsync: require('./catch-async.util'),
   hashPassword: require('./password.util').hashPassword,
   isMatchPassword: require('./password.util').isMatchPassword,
+  DateUtils: require('./date.utils'),
 };

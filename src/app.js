@@ -27,8 +27,9 @@ app.use(morgan('common'));
 // mount routes
 app.use('/api/auth', require('./features/auth'));
 app.use('/api/tours', require('./features/tours'));
-app.use('/api/hotels', require('./features/hotels'));
+app.use('/api/users', require('./features/users'));
 app.use('/api/roles', require('./features/roles'));
+app.use('/api/payment', require('./features/payment'));
 app.use('*', require('./features/not-found'));
 app.use(require('./features/error'));
 
