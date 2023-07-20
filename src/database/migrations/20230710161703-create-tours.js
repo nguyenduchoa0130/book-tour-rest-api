@@ -30,15 +30,6 @@ module.exports = {
       ChiTietThoiGian: {
         type: Sequelize.STRING,
       },
-      HuongDanVienId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'HuongDanViens',
-          key: 'id',
-        },
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW'),

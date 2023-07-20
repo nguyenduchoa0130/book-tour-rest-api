@@ -39,7 +39,14 @@ module.exports = {
     }
 
     // Successful
-    const returnedValue = classToObj(user, ['id', 'TenTaiKhoan', 'HoVaTen', 'DiaChi', 'Sdt']);
+    const returnedValue = classToObj(user, [
+      'id',
+      'TenTaiKhoan',
+      'HoVaTen',
+      'DiaChi',
+      'Sdt',
+      'Email',
+    ]);
     res.cookie('user', JSON.stringify({ id: user.id, role: typeOfUser }), cookieConfig);
     return res.status(200).json({
       status: 'OK',
@@ -51,7 +58,7 @@ module.exports = {
   }),
 
   handleSignUp: catchAsync(async (req, res, next) => {
-    const { username, password, fullName, address, phone } = req.body;
+    const { username, password, fullName, address, phone, email } = req.body;
     const modelName = ModelEnum.KhachHang;
     const model = db.getModel(modelName);
 
@@ -73,10 +80,18 @@ module.exports = {
       HoVaTen: fullName,
       DiaChi: address,
       Sdt: phone,
+      Email: email,
     });
 
     // Successful
-    const returnedValue = classToObj(newUser, ['id', 'TenTaiKhoan', 'HoVaTen', 'DiaChi', 'Sdt']);
+    const returnedValue = classToObj(newUser, [
+      'id',
+      'TenTaiKhoan',
+      'HoVaTen',
+      'DiaChi',
+      'Sdt',
+      'Email',
+    ]);
     res.cookie(
       'user',
       JSON.stringify({ id: newUser.id, role: UserRoleEnum.KhachHang }),

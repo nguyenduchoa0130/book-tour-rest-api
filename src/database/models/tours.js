@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       NgayBatDau: DataTypes.DATE,
       NgayKetThuc: DataTypes.DATE,
       ChiTietThoiGian: DataTypes.STRING,
-      HuongDanVienId: DataTypes.INTEGER,
     },
     {
       sequelize,
