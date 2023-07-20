@@ -162,4 +162,39 @@ module.exports = {
       },
     });
   }),
+
+  handleGetAssignedTours: catchAsync(async (req, res, next) => {
+    const { userId } = req.params;
+    const assignedTours = await LichSuThanhToans.findAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+      where: {
+        HuongDanVienId: +userId,
+      },
+      order: [['id', 'desc']],
+      include: [
+        {
+          model: KhachHangs,
+          attributes: ['HoVaTen'],
+        },
+        {
+          model: Tours,
+          attributes: ['TenTour', 'Gia', 'NgayBatDau', 'NgayKetThuc', 'ChiTietThoiGian', 'DiaDiem'],
+        },
+        {
+          model: ChiTietThanhToans,
+          attributes: ['KhachHang', 'Sdt'],
+        },
+        {
+          model: HuongDanViens,
+          attributes: ['id', 'HoVaTen', 'Sdt'],
+        },
+      ],
+    });
+    return res.status(200).json({
+      status: 'OK',
+      value: assignedTours,
+    });
+  }),
 };

@@ -135,20 +135,6 @@ module.exports = {
     });
   },
 
-  /**
-   * @param {express.Request} req
-   * @param {express.Response} res
-   * @param {express.NextFunction} next
-   */
-  updateTour: async (req, res, next) => {},
-
-  /**
-   * @param {express.Request} req
-   * @param {express.Response} res
-   * @param {express.NextFunction} next
-   */
-  deleteTour: async (req, res, next) => {},
-
   getTourImage: async (req, res, next) => {
     const { imageId } = req.params;
     const image = await HinhAnhTours.findByPk(+imageId, {
