@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models[ModelEnum.HuongDanVien]);
       this.hasMany(models[ModelEnum.ChiTietTours]);
       this.hasMany(models[ModelEnum.HinhAnhTours]);
+      this.hasMany(models[ModelEnum.LichSuThanhToans]);
     }
   }
   Tours.init(

@@ -6,4 +6,6 @@ module.exports = {
   ChiTietTours: 'ChiTietTours',
   HinhAnhTours: 'HinhAnhTours',
   Roles: 'Roles',
+  LichSuThanhToans: 'LichSuThanhToans',
+  ChiTietThanhToans: 'ChiTietThanhToans',
 };
