@@ -3,16 +3,12 @@ const { Model } = require('sequelize');
 const { ModelEnum } = require('../../enums');
 module.exports = (sequelize, DataTypes) => {
   class LichSuThanhToan extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       this.belongsTo(models[ModelEnum.KhachHang], { foreignKey: 'NguoiDatId' });
       this.belongsTo(models[ModelEnum.Tours]);
-      this.hasMany(models[ModelEnum.ChiTietThanhToans]);
+      this.hasMany(models[ModelEnum.ChiTietThanhToans], { foreignKey: 'MaThanhToan' });
+      this.belongsTo(models[ModelEnum.HuongDanVien], { foreignKey: 'HuongDanVienId' });
     }
   }
   LichSuThanhToan.init(
@@ -26,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       SdtNguoiDat: DataTypes.STRING,
       TrangThai: DataTypes.STRING,
       LyDo: DataTypes.STRING,
+      HuongDanVienId: DataTypes.INTEGER,
+      NgayXuLy: DataTypes.DATE,
     },
     {
       sequelize,

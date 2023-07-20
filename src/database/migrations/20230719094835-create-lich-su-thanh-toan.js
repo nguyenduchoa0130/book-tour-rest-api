@@ -38,6 +38,15 @@ module.exports = {
       SdtNguoiDat: {
         type: Sequelize.STRING,
       },
+      HuongDanVienId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'HuongDanViens',
+          key: 'id',
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE,

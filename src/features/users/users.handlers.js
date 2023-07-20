@@ -91,4 +91,16 @@ module.exports = {
       value: userId,
     });
   }),
+
+  getTourGuides: catchAsync(async (req, res, next) => {
+    const users = await HuongDangVien.findAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'MatKhau'],
+      },
+    });
+    return res.status(200).json({
+      status: 'OK',
+      value: users,
+    });
+  }),
 };

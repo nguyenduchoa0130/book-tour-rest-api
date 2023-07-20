@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models[ModelEnum.HuongDanVien]);
       this.hasMany(models[ModelEnum.ChiTietTours]);
       this.hasMany(models[ModelEnum.HinhAnhTours]);
       this.hasMany(models[ModelEnum.LichSuThanhToans]);

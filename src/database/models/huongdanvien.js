@@ -1,8 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
+const { ModelEnum } = require('../../enums');
 module.exports = (sequelize, DataTypes) => {
   class HuongDanVien extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models[ModelEnum.LichSuThanhToans]);
+    }
   }
   HuongDanVien.init(
     {
@@ -15,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'HuongDanVien',
-    }
+    },
   );
   return HuongDanVien;
 };
-

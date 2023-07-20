@@ -31,7 +31,6 @@ module.exports = {
       Tours.findOne({
         where: {
           id: payload.TourId,
-          TrangThai: TourStatusEnum.DangMo,
         },
       }),
     ]);
@@ -76,14 +75,20 @@ module.exports = {
       },
       include: [
         {
+          model: KhachHangs,
+          attributes: ['HoVaTen'],
+        },
+        {
           model: Tours,
           attributes: ['TenTour', 'Gia', 'NgayBatDau', 'NgayKetThuc', 'ChiTietThoiGian', 'DiaDiem'],
-          include: [
-            {
-              model: HuongDanViens,
-              attributes: ['id', 'HoVaTen'],
-            },
-          ],
+        },
+        {
+          model: ChiTietThanhToans,
+          attributes: ['KhachHang', 'Sdt'],
+        },
+        {
+          model: HuongDanViens,
+          attributes: ['id', 'HoVaTen', 'Sdt'],
         },
       ],
     });
@@ -126,11 +131,35 @@ module.exports = {
           model: ChiTietThanhToans,
           attributes: ['KhachHang', 'Sdt'],
         },
+        {
+          model: HuongDanViens,
+          attributes: ['id', 'HoVaTen', 'Sdt'],
+        },
       ],
     });
     return res.status(200).json({
       status: 'OK',
       value: paymentHistories,
+    });
+  }),
+
+  handleUpdatePayment: catchAsync(async (req, res, next) => {
+    const { paymentId } = req.params;
+    const payment = await LichSuThanhToans.findByPk(+paymentId);
+    if (!payment) {
+      return next(AppError.createNotFoundError('Không tìm thấy đơn đặt tour'));
+    }
+    const { isSuccess, ...rest } = req.body;
+    await payment.update({
+      ...rest,
+      NgayXuLy: new Date().toJSON(),
+      TrangThai: isSuccess ? BookingStatusEnum.ThanhCong : BookingStatusEnum.KhongThanhCong,
+    });
+    return res.status(200).json({
+      status: 'OK',
+      value: {
+        message: 'Xử lý đơn đặt tour thành công',
+      },
     });
   }),
 };
