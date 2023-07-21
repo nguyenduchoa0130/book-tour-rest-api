@@ -16,10 +16,40 @@ module.exports = {
    * @param {express.NextFunction} next
    */
   getAllTours: async (req, res, next) => {
+    const { keyword, startDate, place } = req.query;
+    let query = {};
+    if (keyword) {
+      query = {
+        ...query,
+        TenTour: {
+          [Op.iLike]: `%${keyword}%`,
+        },
+      };
+    }
+    if (startDate) {
+      query = {
+        ...query,
+        NgayBatDau: {
+          [Op.gte]: new Date(startDate),
+        },
+      };
+    }
+    if (place) {
+      query = {
+        ...query,
+        DiaDiem: place,
+      };
+    }
     const tours = await Tours.findAll({
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
       },
+      where: {
+        [Op.and]: {
+          ...query,
+        },
+      },
+      order: [['id', 'desc']],
       include: [
         {
           model: ChiTietTours,

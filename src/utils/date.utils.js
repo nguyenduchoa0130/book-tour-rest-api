@@ -9,7 +9,7 @@ module.exports = {
     // Convert milliseconds to days
     const days = Math.floor(count / (1000 * 60 * 60 * 24));
 
-    return days > 0 ? days : 1;
+    return days > 0 ? days + 1 : 1;
   },
 
   getDate: (dateTime) => {
