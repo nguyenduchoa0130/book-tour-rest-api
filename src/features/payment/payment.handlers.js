@@ -78,6 +78,7 @@ module.exports = {
       where: {
         NguoiDatId: +userId,
       },
+      order: [['id', 'desc']],
       include: [
         {
           model: KhachHangs,

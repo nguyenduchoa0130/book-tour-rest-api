@@ -134,30 +134,34 @@ module.exports = {
     const newTour = await Tours.create(tourPayload);
     // Create tour details
     const details = JSON.parse(tourDetails);
-    const detailPromises = details.map((item) => {
-      return ChiTietTours.create({
-        TourId: newTour.id,
-        TieuDe: item.title,
-        MoTaChiTiet: item.description,
+    if (details && details.length) {
+      const detailPromises = details.map((item) => {
+        return ChiTietTours.create({
+          TourId: newTour.id,
+          TieuDe: item.title,
+          MoTaChiTiet: item.description,
+        });
       });
-    });
-    await Promise.all(detailPromises);
+      await Promise.all(detailPromises);
+    }
     // Create Tour Images
-    const imagePromises = tourImages.map((img) => {
-      return HinhAnhTours.create({
-        source: img.buffer,
-        TourId: newTour.id,
-        imgType: img.mimetype,
+    if (tourImages && tourImages.length) {
+      const imagePromises = tourImages.map((img) => {
+        return HinhAnhTours.create({
+          source: img.buffer,
+          TourId: newTour.id,
+          imgType: img.mimetype,
+        });
       });
-    });
-    const newTourImages = await Promise.all(imagePromises);
-    // Update Url
-    const updateTourImagesUrl = newTourImages.map((item) => {
-      return item.update({
-        url: `${process.env.HOST_ORIGIN}/api/tours/_getImage/${item.id}`,
+      const newTourImages = await Promise.all(imagePromises);
+      // Update Url
+      const updateTourImagesUrl = newTourImages.map((item) => {
+        return item.update({
+          url: `${process.env.HOST_ORIGIN}/api/tours/_getImage/${item.id}`,
+        });
       });
-    });
-    await updateTourImagesUrl;
+      await Promise.all(updateTourImagesUrl);
+    }
 
     return res.status(201).json({
       status: 'OK',
