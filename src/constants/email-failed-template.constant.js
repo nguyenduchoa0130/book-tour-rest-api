@@ -46,11 +46,11 @@ module.exports = `
 <body>
     <div class="container">
         <h1>Từ Chối Đặt Tour - Trải nghiệm du lịch</h1>
-        <p>Kính gửi quý khách hàng [Tên khách hàng],</p>
-        <p>Chúng tôi thành thật xin thông báo rằng yêu cầu đặt tour của quý khách cho <span class="bold">[Tên Tour]</span> đã bị từ chối do lý do sau đây:</p>
+        <p>Kính gửi quý khách hàng {customerName},</p>
+        <p>Chúng tôi thành thật xin thông báo rằng yêu cầu đặt tour của quý khách cho <span class="bold">{tourName}</span> đã bị từ chối do lý do sau đây:</p>
 
         <div class="reason">
-            <p>[Lý do từ chối]</p>
+            <p>{reason}</p>
         </div>
 
         <p>Chúng tôi hiểu rằng điều này có thể gây thất vọng và thành thật xin lỗi vì bất kỳ sự bất tiện nào. Nếu quý khách có bất kỳ câu hỏi hoặc muốn được giải thích thêm về lý do từ chối, xin vui lòng liên hệ với chúng tôi.</p>
@@ -64,11 +64,8 @@ module.exports = `
         <p>Một lần nữa, chúng tôi thành thật xin lỗi vì bất kỳ sự bất tiện nào và hy vọng có cơ hội được phục vụ quý khách trong tương lai.</p>
 
         <p>Trân trọng,</p>
-        <p>[Tên của Bạn]</p>
-        <p>[Tên Công ty Tour của Bạn]</p>
-        <p>[Thông tin liên hệ]</p>
+        <p>IVIVU</p>
     </div>
 </body>
 </html>
-
 `;

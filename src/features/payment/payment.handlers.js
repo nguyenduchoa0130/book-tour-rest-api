@@ -1,9 +1,10 @@
 require('dotenv').config();
 const stripe = require('stripe');
-const { catchAsync } = require('../../utils');
+const { catchAsync, sendMail, logger } = require('../../utils');
 const db = require('./../../database');
-const { ModelEnum, TourStatusEnum, BookingStatusEnum } = require('../../enums');
+const { ModelEnum, BookingStatusEnum } = require('../../enums');
 const AppError = require('../../models/error.model');
+const mailTemplateUtil = require('../../utils/mail-template.util');
 
 const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 const LichSuThanhToans = db.getModel(ModelEnum.LichSuThanhToans);
@@ -11,6 +12,7 @@ const ChiTietThanhToans = db.getModel(ModelEnum.ChiTietThanhToans);
 const KhachHangs = db.getModel(ModelEnum.KhachHang);
 const Tours = db.getModel(ModelEnum.Tours);
 const HuongDanViens = db.getModel(ModelEnum.HuongDanVien);
+const NguoiQuanLies = db.getModel(ModelEnum.NguoiQuanLy);
 
 module.exports = {
   handleSetUpPaymentIntent: catchAsync(async (req, res, next) => {
@@ -34,6 +36,7 @@ module.exports = {
         },
       }),
     ]);
+
     // Validate customer
     if (!customer) {
       return next(
@@ -42,6 +45,7 @@ module.exports = {
         ),
       );
     }
+
     // Validate tour
     if (!tour) {
       return next(
@@ -50,6 +54,7 @@ module.exports = {
         ),
       );
     }
+
     const payment = await LichSuThanhToans.create(payload);
     const promises = customers.map((customer) =>
       ChiTietThanhToans.create({
@@ -124,6 +129,10 @@ module.exports = {
           attributes: ['HoVaTen'],
         },
         {
+          model: NguoiQuanLies,
+          attributes: ['HoVaTen'],
+        },
+        {
           model: Tours,
           attributes: ['TenTour', 'Gia', 'NgayBatDau', 'NgayKetThuc', 'ChiTietThoiGian', 'DiaDiem'],
         },
@@ -145,7 +154,24 @@ module.exports = {
 
   handleUpdatePayment: catchAsync(async (req, res, next) => {
     const { paymentId } = req.params;
-    const payment = await LichSuThanhToans.findByPk(+paymentId);
+    const payment = await LichSuThanhToans.findByPk(+paymentId, {
+      include: [
+        {
+          model: ChiTietThanhToans,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: KhachHangs,
+          attributes: ['HoVaTen'],
+        },
+        {
+          model: Tours,
+          attributes: ['TenTour', 'NgayBatDau', 'NgayKetThuc', 'ChiTietThoiGian', 'DiaDiem'],
+        },
+      ],
+    });
     if (!payment) {
       return next(AppError.createNotFoundError('Không tìm thấy đơn đặt tour'));
     }
@@ -155,6 +181,33 @@ module.exports = {
       NgayXuLy: new Date().toJSON(),
       TrangThai: isSuccess ? BookingStatusEnum.ThanhCong : BookingStatusEnum.KhongThanhCong,
     });
+    try {
+      const rawPayment = payment.toJSON();
+      if (isSuccess) {
+        const template = mailTemplateUtil.createSuccessMailTemplate(
+          rawPayment?.KhachHang?.HoVaTen,
+          rawPayment?.Tour?.TenTour,
+          rawPayment?.Tour?.NgayBatDat,
+          rawPayment?.Tour?.NgayKetThuc,
+          rawPayment?.Tour?.ChiTietThoiGian,
+          rawPayment?.ChiTietThanhToans?.length,
+          rawPayment?.Tour?.DiaDiem,
+          process.env.FRONTEND_HOST,
+        );
+        await sendMail(rawPayment?.Email, 'IVIVU - Đặt Tour Thành Công', template);
+      } else {
+        const template = mailTemplateUtil.createFailedEmailTemplate(
+          rawPayment?.KhachHang?.HoVaTen,
+          rawPayment?.Tour?.TenTour,
+          rawPayment?.LyDo,
+          process.env.FRONTEND_HOST,
+        );
+        await sendMail(rawPayment?.Email, 'IVIVU - Đặt Tour Không Thành Công', template);
+      }
+    } catch (error) {
+      logger.error('Send mail failed');
+      logger.error(error);
+    }
     return res.status(200).json({
       status: 'OK',
       value: {

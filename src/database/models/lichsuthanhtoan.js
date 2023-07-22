@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models[ModelEnum.Tours]);
       this.hasMany(models[ModelEnum.ChiTietThanhToans], { foreignKey: 'MaThanhToan' });
       this.belongsTo(models[ModelEnum.HuongDanVien], { foreignKey: 'HuongDanVienId' });
+      this.belongsTo(models[ModelEnum.NguoiQuanLy], { foreignKey: 'NguoiQuanLyId' });
     }
   }
   LichSuThanhToan.init(
@@ -24,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       LyDo: DataTypes.STRING,
       HuongDanVienId: DataTypes.INTEGER,
       NgayXuLy: DataTypes.DATE,
+      Email: DataTypes.STRING,
+      NguoiQuanLyId: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -1,8 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
+const { ModelEnum } = require('../../enums');
 module.exports = (sequelize, DataTypes) => {
   class NguoiQuanLy extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models[ModelEnum.LichSuThanhToans]);
+    }
   }
   NguoiQuanLy.init(
     {

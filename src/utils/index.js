@@ -5,4 +5,5 @@ module.exports = {
   hashPassword: require('./password.util').hashPassword,
   isMatchPassword: require('./password.util').isMatchPassword,
   DateUtils: require('./date.utils'),
+  sendMail: require('./send-mail.util'),
 };
