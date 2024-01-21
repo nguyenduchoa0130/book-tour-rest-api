@@ -13,7 +13,10 @@ module.exports = {
           name: 'Hướng dẫn viên',
         },
         {
-          name: 'Người quản lý',
+          name: 'Người điều phối',
+        },
+        {
+          name: 'Sale',
         },
       ],
       {},

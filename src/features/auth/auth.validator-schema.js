@@ -20,7 +20,14 @@ const signInPayloadSchema = {
       errorMessage: ErrorMessageConst.ERROR_EMPTY_TYPE_OF_USER,
     },
     isIn: {
-      options: [[UserRoleEnum.KhachHang, UserRoleEnum.HuongDanVien, UserRoleEnum.NguoiQuanLy]],
+      options: [
+        [
+          UserRoleEnum.KhachHang,
+          UserRoleEnum.HuongDanVien,
+          UserRoleEnum.NguoiQuanLy,
+          UserRoleEnum.Sale,
+        ],
+      ],
       errorMessage: ErrorMessageConst.ERROR_INVALID_TYPE_OF_USER,
     },
   },

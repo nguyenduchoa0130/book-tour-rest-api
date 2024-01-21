@@ -8,4 +8,5 @@ module.exports = {
   Roles: 'Roles',
   LichSuThanhToans: 'LichSuThanhToans',
   ChiTietThanhToans: 'ChiTietThanhToans',
+  Sale: 'Sale',
 };

@@ -7,6 +7,7 @@ const db = require('./../../database');
 const NguoiQuanLy = db.getModel(ModelEnum.NguoiQuanLy);
 const HuongDangVien = db.getModel(ModelEnum.HuongDanVien);
 const KhachHang = db.getModel(ModelEnum.KhachHang);
+const Sale = db.getModel(ModelEnum.Sale);
 
 module.exports = {
   getUsers: catchAsync(async (req, res, next) => {
@@ -15,10 +16,11 @@ module.exports = {
         exclude: ['MatKhau', 'createdAt', 'updatedAt'],
       },
     };
-    const [managers, tourGuides, customers] = await Promise.all([
+    const [managers, tourGuides, customers, sales] = await Promise.all([
       NguoiQuanLy.findAll(config),
       HuongDangVien.findAll(config),
       KhachHang.findAll(config),
+      Sale.findAll(config),
     ]);
     return res.status(200).json({
       status: 'OK',
@@ -35,6 +37,11 @@ module.exports = {
             ...item.toJSON(),
             VaiTro: UserRoleEnum.HuongDanVien,
           })),
+        },
+        {
+          role: 'Sale',
+          roleId: UserRoleEnum.Sale,
+          users: sales.map((item) => ({ ...item.toJSON(), VaiTro: UserRoleEnum.Sale })),
         },
         {
           role: 'Khách Hàng',
@@ -85,10 +92,32 @@ module.exports = {
   }),
 
   updateUser: catchAsync(async (req, res, next) => {
-    const { userId } = req.params;
+    const user = await KhachHang.findByPk(req.params.userId);
+    if (!user) {
+      throw AppErrorModel.createNotFoundError(
+        `Không tìm thấy người dùng có ID: ${req.params.userId}`,
+      );
+    }
+    let hash = null;
+    console.log(req.body.password);
+    if (req.body.password) {
+      hash = await hashPassword(req.body.password);
+    }
+    await KhachHang.update(
+      {
+        MatKhau: hash || user.MatKhau,
+        HoVaTen: req.body.fullName || user.HoVaTen,
+        DiaChi: req.body.address || user.DiaChi,
+        Sdt: req.body.phone || user.Sdt,
+      },
+      { where: { id: +req.params.userId } },
+    );
+    const newUser = await KhachHang.findByPk(+req.params.userId, {
+      attributes: { exclude: ['MatKhau', 'createdAt', 'updatedAt'] },
+    });
     return res.status(200).json({
       status: 'Ok',
-      value: userId,
+      value: newUser,
     });
   }),
 
@@ -102,5 +131,16 @@ module.exports = {
       status: 'OK',
       value: users,
     });
+  }),
+
+  deleteUser: catchAsync(async (req, res) => {
+    const user = await KhachHang.findByPk(req.params.userId);
+    if (!user) {
+      throw AppErrorModel.createNotFoundError(
+        `Không tìm thấy người dùng có ID: ${req.params.userId}`,
+      );
+    }
+    await KhachHang.destroy({ where: { id: +req.params.userId } });
+    return res.status(204).send();
   }),
 };

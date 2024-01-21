@@ -3,4 +3,5 @@ module.exports = {
   HuongDanVien: 2,
   NguoiQuanLy: 3,
   ChuTaiKhoan: 4,
+  Sale: 4,
 };
