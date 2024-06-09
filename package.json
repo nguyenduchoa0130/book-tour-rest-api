@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --inspect index.js",
-    "create-table": "sequelize-cli db:migrate",
-    "import-data": "sequelize-cli db:seed:all",
+    "create-table": "sequelize-cli db:migrate --env production",
+    "import-data": "sequelize-cli db:seed:all --env production",
     "rm-data": "npx sequelize-cli db:seed:undo:all",
     "rm-table": "sequelize-cli db:migrate:undo:all",
     "start": "node index.js"
@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22",
-    "sequelize-cli": "^6.6.1"
+    "sequelize-cli": "^6.6.2"
   }
 }
